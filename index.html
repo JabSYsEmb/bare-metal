@@ -1,0 +1,58 @@
+<!-- Example of Canvas API -->
+<!DOCTYPE html>
+<head>
+  <title>Canvas API</title>
+</head>
+
+<body>
+  <canvas id="my_canvas"></canvas>
+</body>
+
+<script>
+  /** @type {HTMLCanvasElement} */
+  const canvasObj = document.getElementById("my_canvas");
+  const ctx = canvasObj.getContext("2d");
+
+  /** @param {CanvasRenderingContext2D} ctx */
+  function initialDrawing(ctx) {
+    ctx.beginPath();
+  }
+
+  /**
+   * @param {MouseEvent} e
+   * @param {CanvasRenderingContext2D} ctx */
+  function drawing(e, ctx) {
+    const { pageX: x, pageY: y } = e;
+    ctx.lineTo(x - 10, y - 10);
+    ctx.stroke();
+  }
+
+  /** @param {CanvasRenderingContext2D} ctx */
+  function stopDrawing(ctx) {
+    ctx.stroke();
+  }
+</script>
+
+<script id="listeners">
+  canvasObj.addEventListener("click", () => {
+    ctx.strokeStyle = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+  });
+
+  canvasObj.addEventListener("mouseenter", () => {
+    initialDrawing(ctx);
+  });
+
+  canvasObj.addEventListener("mouseleave", () => {
+    stopDrawing(ctx);
+  });
+
+  canvasObj.addEventListener("mousemove", (e) => {
+    drawing(e, ctx);
+  });
+</script>
+
+<style>
+  #my_canvas {
+    border: 2px red solid;
+  }
+</style>
