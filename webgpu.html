@@ -1,111 +1,32 @@
+<script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
 <canvas></canvas>
-<canvas id="2d"></canvas>
-<script type="module">
-  function init2DCanvas() {
-    /** @type {HTMLCanvasElement} canvas2D */
-    const canvas2D = document.getElementById("2d");
-    const ctx = canvas2D.getContext("2d");
-    console.log(canvas2D.getClientRects()[0]);
-    const { height, width } = canvas2D.getClientRects()[0];
-    ctx.beginPath();
-    const [x, y] = [Math.floor(width / 2), Math.floor(height / 2)];
-    ctx.moveTo(x, y - 20);
-    ctx.lineTo(x - 80, y + 40);
-    ctx.lineTo(x + 80, y + 40);
-    ctx.fill();
-  }
+<canvas id="2d" class="canvas"></canvas>
+<canvas id="webgl"></canvas>
 
-  async function main() {
-    if (!navigator.gpu) {
-      throw Error("GPU isn't supported");
-      return;
+<script type="importmap">
+  {
+    "imports": {
+      "canvas2d": "./utils/canvas2d.js",
+      "webgl": "./utils/webgl.js",
+      "webgpu": "./utils/webgpu.js"
     }
-
-    const adapter = await navigator.gpu?.requestAdapter();
-    const device = await adapter?.requestDevice();
-
-    if (!device) {
-      throw Error("need a browser that supports WebGPU");
-      return;
-    }
-
-    const canvas = document.querySelector("canvas");
-    const context = canvas.getContext("webgpu");
-    const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
-    context.configure({
-      device,
-      format: presentationFormat,
-    });
-
-    const module = device.createShaderModule({
-      label: "our hardcoded red triangle shaders",
-      code: `
-      @vertex fn vs(
-        @builtin(vertex_index) vertexIndex : u32
-      ) -> @builtin(position) vec4f {
-        let pos = array(
-          vec2f( 0.0,  0.5),  // top center
-          vec2f(-0.5, -0.5),  // bottom left
-          vec2f( 0.5, -0.5),  // bottom right
-        );
-
-        return vec4f(pos[vertexIndex], 0.0, 1.0);
-      }
-
-      @fragment fn fs() -> @location(0) vec4f {
-        return vec4f(1.0, 0.7, 0.9, 0.8);
-      }
-    `,
-    });
-
-    const pipeline = device.createRenderPipeline({
-      label: "our hardcoded red triangle pipeline",
-      layout: "auto",
-      vertex: {
-        module,
-        entryPoint: "vs",
-      },
-      fragment: {
-        module,
-        entryPoint: "fs",
-        targets: [{ format: presentationFormat }],
-      },
-    });
-
-    const renderPassDescriptor = {
-      label: "our hardcoded red triangle renderPassDes",
-      colorAttachments: [
-        {
-          clearValue: [0.3, 0.3, 0.3, 1],
-          loadOp: "clear",
-          storeOp: "store",
-        },
-      ],
-    };
-
-    render(renderPassDescriptor, context, device, pipeline);
   }
-
-  function render(renderPassDescriptor, context, device, pipeline) {
-    // Get the current texture from the canvas context and
-    // set it as the texture to render to.
-    renderPassDescriptor.colorAttachments[0].view = context
-      .getCurrentTexture()
-      .createView();
-
-    // make a command encoder to start encoding commands
-    const encoder = device.createCommandEncoder({ label: "our encoder" });
-
-    // make a render pass encoder to encode render specific commands
-    const pass = encoder.beginRenderPass(renderPassDescriptor);
-    pass.setPipeline(pipeline);
-    pass.draw(3); // call our vertex shader 3 times
-    pass.end();
-
-    const commandBuffer = encoder.finish();
-    device.queue.submit([commandBuffer]);
-  }
-
-  main();
-  init2DCanvas();
 </script>
+
+<script type="module">
+  import { init2DCanvas } from "canvas2d";
+  import { initWebGL } from "webgl";
+  import { initWebGPU } from "webgpu";
+  init2DCanvas();
+  initWebGL();
+  initWebGPU();
+</script>
+
+<style>
+  canvas {
+    outline: 1px solid salmon;
+  }
+  canvas.canvas {
+    background-color: hsl(0, 0%, 30%);
+  }
+</style>
