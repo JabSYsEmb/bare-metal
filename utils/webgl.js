@@ -9,7 +9,7 @@ export async function initWebGL() {
       precision highp float;
       out vec4 outColor;
       void main() {
-        outColor = vec4(1, 0, 0.5, 1);
+        outColor = vec4(0.92, 0.71, 0.9, 1);
       }`;
 
   function createShader(gl, type, source) {
@@ -69,7 +69,7 @@ export async function initWebGL() {
     // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-    var positions = [0, 0, 0, 0.5, 0.7, 0];
+    var positions = [-0.7, 0.0, 0.0, 0.7, 0.7, 0.0];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
     // Create a vertex array object (attribute state)
