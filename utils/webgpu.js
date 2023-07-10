@@ -12,7 +12,8 @@ export async function initWebGPU() {
     return;
   }
 
-  const canvas = document.querySelector("canvas");
+  /** @type {HTMLCanvasElement} canvas */
+  const canvas = document.getElementById("webgpu");
   const context = canvas.getContext("webgpu");
   const presentationFormat = navigator.gpu.getPreferredCanvasFormat();
 

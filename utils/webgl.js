@@ -1,4 +1,4 @@
-export async function initWebGL() {
+export async function initWebGL2() {
   const vertexShaderSource = `#version 300 es
       in vec4 a_position;
       void main() {
@@ -9,7 +9,7 @@ export async function initWebGL() {
       precision highp float;
       out vec4 outColor;
       void main() {
-        outColor = vec4(0.92, 0.71, 0.9, 1);
+        outColor = vec4(0.92, 0.71, 0.9, 0.8);
       }`;
 
   function createShader(gl, type, source) {
@@ -41,9 +41,10 @@ export async function initWebGL() {
     return undefined;
   }
 
-  function innermain() {
+  function main() {
     // Get A WebGL context
-    var canvas = document.getElementById("webgl");
+    /** @type {HTMLCanvasElement} canvas */
+    var canvas = document.getElementById("webgl-2");
     var gl = canvas.getContext("webgl2");
     if (!gl) {
       return;
@@ -69,7 +70,7 @@ export async function initWebGL() {
     // Bind it to ARRAY_BUFFER (think of it as ARRAY_BUFFER = positionBuffer)
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-    var positions = [-0.7, 0.0, 0.0, 0.7, 0.7, 0.0];
+    var positions = [-0.45, -0.45, 0.0, 0.45, 0.45, -0.45];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
     // Create a vertex array object (attribute state)
@@ -102,7 +103,7 @@ export async function initWebGL() {
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
     // Clear the canvas
-    gl.clearColor(0, 0, 0, 0);
+    gl.clearColor(0.3, 0.3, 0.3, 1);
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     // Tell it to use our program (pair of shaders)
@@ -117,5 +118,6 @@ export async function initWebGL() {
     var count = 3;
     gl.drawArrays(primitiveType, offset, count);
   }
-  innermain();
+
+  main();
 }

@@ -1,7 +1,7 @@
 <script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
-<canvas></canvas>
-<canvas id="2d" class="canvas"></canvas>
-<canvas id="webgl"></canvas>
+<canvas id="webgpu"></canvas>
+<canvas id="webgl-2"></canvas>
+<canvas id="2d" class="bg-gray"></canvas>
 
 <script type="importmap">
   {
@@ -15,10 +15,10 @@
 
 <script type="module">
   import { init2DCanvas } from "canvas2d";
-  import { initWebGL } from "webgl";
+  import { initWebGL2 } from "webgl";
   import { initWebGPU } from "webgpu";
   init2DCanvas();
-  initWebGL();
+  initWebGL2();
   initWebGPU();
 </script>
 
@@ -26,7 +26,7 @@
   canvas {
     outline: 1px solid salmon;
   }
-  canvas.canvas {
+  canvas.bg-gray {
     background-color: hsl(0, 0%, 30%);
   }
 </style>
