@@ -1,19 +1,26 @@
-<script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
-<div class="flex flex-col items-center main-width overflow-auto">
-  <div class="flex items-center space-around">
-    <h2>Webgpu - Example</h2>
-    <canvas id="webgpu" width="500" height="500"></canvas>
-  </div>
-  <div class="flex items-center space-around">
-    <h2>Webgl-2 - Example</h2>
-    <canvas id="webgl-2" width="500" height="500"></canvas>
-  </div>
-  <div class="flex items-center space-around">
-    <h2>2D Canvas - Example</h2>
-    <canvas id="2d" class="bg-gray" width="500" height="500"></canvas>
-  </div>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>webgl/gpu comparison</title>
+    <link rel="stylesheet" href="./style/main.css" />
+  </head>
 
+  <script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
+  <div class="flex flex-col items-center main-width overflow-auto">
+    <div class="flex items-center space-around">
+      <h2>Webgpu - Example</h2>
+      <canvas id="webgpu" width="500" height="500"></canvas>
+    </div>
+    <div class="flex items-center space-around">
+      <h2>Webgl-2 - Example</h2>
+      <canvas id="webgl-2" width="500" height="500"></canvas>
+    </div>
+    <div class="flex items-center space-around">
+      <h2>2D Canvas - Example</h2>
+      <canvas id="2d" class="bg-gray" width="500" height="500"></canvas>
+    </div>
+  </div>
+</html>
 <script type="importmap">
   {
     "imports": {
@@ -54,49 +61,5 @@
 
   canvas {
     outline: 1px solid salmon;
-  }
-
-  .bg-gray {
-    background-color: hsl(0, 0%, 30%);
-  }
-
-  .flex {
-    display: flex;
-    width: 100%;
-  }
-
-  .space-between {
-    justify-content: space-between;
-  }
-
-  .space-around {
-    justify-content: space-around;
-  }
-
-  .items-center {
-    align-items: center;
-  }
-
-  .justify-center {
-    justify-content: center;
-  }
-
-  .main-width {
-    height: calc(100vh - var(--margin-html) * 3);
-  }
-
-  .overflow-auto {
-    overflow: scroll;
-    overflow-x: scroll;
-    scroll-behavior: content;
-  }
-
-  .flex-col {
-    flex-direction: column;
-  }
-
-  .flex > div {
-    margin-top: 30px;
-    margin-bottom: 10px;
   }
 </style>
