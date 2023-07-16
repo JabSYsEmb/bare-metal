@@ -1,7 +1,6 @@
 export async function initWebGPU() {
   if (!navigator.gpu) {
     throw Error("GPU isn't supported");
-    return;
   }
 
   const adapter = await navigator.gpu?.requestAdapter();
@@ -9,7 +8,6 @@ export async function initWebGPU() {
 
   if (!device) {
     throw Error("need a browser that supports WebGPU");
-    return;
   }
 
   /** @type {HTMLCanvasElement} canvas */

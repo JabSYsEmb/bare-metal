@@ -1,7 +1,18 @@
 <script src="https://webgl2fundamentals.org/webgl/resources/webgl-utils.js"></script>
-<canvas id="webgpu"></canvas>
-<canvas id="webgl-2"></canvas>
-<canvas id="2d" class="bg-gray"></canvas>
+<div class="flex flex-col items-center main-width overflow-auto">
+  <div class="flex items-center space-around">
+    <h2>Webgpu - Example</h2>
+    <canvas id="webgpu" width="500" height="500"></canvas>
+  </div>
+  <div class="flex items-center space-around">
+    <h2>Webgl-2 - Example</h2>
+    <canvas id="webgl-2" width="500" height="500"></canvas>
+  </div>
+  <div class="flex items-center space-around">
+    <h2>2D Canvas - Example</h2>
+    <canvas id="2d" class="bg-gray" width="500" height="500"></canvas>
+  </div>
+</div>
 
 <script type="importmap">
   {
@@ -23,10 +34,69 @@
 </script>
 
 <style>
+  * {
+    --margin-html: 30px;
+    background-color: white;
+  }
+
+  html {
+    margin: var(--margin-html);
+    border-radius: 0.5em;
+    outline: 1px solid blue;
+    background-color: aquamarine;
+  }
+
+  h2 {
+    height: fit-content;
+    text-align: center;
+    width: 20rem;
+  }
+
   canvas {
     outline: 1px solid salmon;
   }
-  canvas.bg-gray {
+
+  .bg-gray {
     background-color: hsl(0, 0%, 30%);
+  }
+
+  .flex {
+    display: flex;
+    width: 100%;
+  }
+
+  .space-between {
+    justify-content: space-between;
+  }
+
+  .space-around {
+    justify-content: space-around;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-center {
+    justify-content: center;
+  }
+
+  .main-width {
+    height: calc(100vh - var(--margin-html) * 3);
+  }
+
+  .overflow-auto {
+    overflow: scroll;
+    overflow-x: scroll;
+    scroll-behavior: content;
+  }
+
+  .flex-col {
+    flex-direction: column;
+  }
+
+  .flex > div {
+    margin-top: 30px;
+    margin-bottom: 10px;
   }
 </style>
