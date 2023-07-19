@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<head>
+  <title>GPU Buffers Creation</title>
+  <link href="../style/main.css" rel="stylesheet" />
+</head>
+
+<body>
+  <h1>Matrix Multiplication on GPU</h1>
+</body>
+
+<div class="flex items-center flex-gap-2">
+  <div id="firstMatrix" class="grid matrixBorder matrix2x3"></div>
+  <span>X</span>
+  <div id="secondMatrix" class="grid matrixBorder matrix3x2"></div>
+  <span>=</span>
+  <div id="resultMatrix" class="grid matrixBorder matrix2x2"></div>
+</div>
+
+<script type="module" lang="js">
+  import { matrixMultiplication } from "./computeShader.js";
+  const resultMatrix = [];
+  const firstMatrix = [2, 3, 1, 2, 3, 4, 5, 6];
+  const secondMatrix = [3, 2, 7, 8, 9, 10, 11, 12];
+
+  const firstMatrixDom = document.querySelector("#firstMatrix");
+  firstMatrixDom.innerHTML = firstMatrix
+    .slice(2)
+    .map((item) => `<label>${item}</label>`)
+    .join("");
+
+  const secondMatrixDom = document.querySelector("#secondMatrix");
+  secondMatrixDom.innerHTML = secondMatrix
+    .slice(2)
+    .map((item) => `<label>${item}</label>`)
+    .join("");
+
+  /** @type {ArrayBuffer} res */
+  const res = await matrixMultiplication(firstMatrix, secondMatrix);
+  new Float32Array(res, Float32Array.BYTES_PER_ELEMENT * 2).forEach((item) =>
+    resultMatrix.push(item)
+  );
+
+  if (resultMatrix.length !== 0) {
+    const resultMatrixDom = document.querySelector("#resultMatrix");
+    resultMatrixDom.innerHTML = resultMatrix
+      .map((item) => `<label>${item}</label>`)
+      .join("");
+  }
+</script>
+<style>
+  h1 {
+    text-align: center;
+    width: 100%;
+  }
+
+  .grid {
+    display: grid;
+    width: fit-content;
+    text-align: center;
+    column-gap: 10px;
+    row-gap: 10px;
+    padding: 5px;
+  }
+
+  .matrixBorder {
+    border-style: solid;
+    border-radius: 10px;
+    border-bottom: 2px;
+    border-top: 2px;
+  }
+
+  .matrix2x3 {
+    grid-template-columns: 20px 20px 20px;
+    grid-template-rows: 20px 20px;
+  }
+
+  .matrix3x2 {
+    grid-template-columns: 20px 20px;
+    grid-template-rows: 20px 20px 20px;
+  }
+
+  .matrix2x2 {
+    grid-template-columns: 20px 20px;
+    grid-template-rows: 20px 20px;
+  }
+</style>
