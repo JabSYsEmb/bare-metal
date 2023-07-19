@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>WebGPU Life</title>
+  </head>
+  <body>
+    <canvas width="512" height="512"></canvas>
+    <!-- script of type module enables async coding -->
+    <script type="module">
+      /** @type {HTMLCanvasElement} canvas*/
+      const canvas = document.querySelector("canvas");
+
+      // Your WebGPU code will begin here!
+      const adapter = await navigator?.gpu.requestAdapter();
+
+      /** @type {GPUDevice} device */
+      const device = await adapter.requestDevice();
+
+      /** @type {GPUCanvasContext} context */
+      const context = canvas.getContext("webgpu");
+      context.configure({
+        device,
+        format: navigator?.gpu.getPreferredCanvasFormat(),
+      });
+
+      const encoder = device.createCommandEncoder();
+      const pass = encoder.beginRenderPass({
+        colorAttachments: [
+          {
+            view: context.getCurrentTexture().createView(),
+            loadOp: "clear",
+            // clearValue: [0.0,0.2,1.0, 1.0],
+            clearValue: { r: 0.2, g: 0.9, b: 1.0, a: 1.0 },
+            storeOp: "store",
+          },
+        ],
+      });
+
+      pass.end();
+      device.queue.submit([encoder.finish()]);
+    </script>
+  </body>
+</html>
